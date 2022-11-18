@@ -6,9 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER_RIGHT" minHeight="500.0" minWidth="600.0" nodeOrientation="LEFT_TO_RIGHT" spacing="20.0"
-      xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="dnu.fpecs.rudyson.cardbfx.CarDBFX_Controller_Main">
+<VBox alignment="CENTER_RIGHT" minHeight="500.0" minWidth="600.0" nodeOrientation="LEFT_TO_RIGHT" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dnu.fpecs.rudyson.cardbfx.CarDBFX_Controller_Main">
     <children>
         <BorderPane VBox.vgrow="ALWAYS">
             <center>
@@ -16,23 +14,18 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0">
                             <children>
-                                <TableView fx:id="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <TableView fx:id="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn fx:id="tc_id" editable="false" maxWidth="500.0" minWidth="35.0"
-                                                     prefWidth="-1.0" text="ID"/>
-                                        <TableColumn fx:id="tc_name" editable="false" maxWidth="500.0" minWidth="100.0"
-                                                     prefWidth="-1.0" text="Name"/>
-                                        <TableColumn fx:id="tc_vendor" editable="false" maxWidth="500.0"
-                                                     minWidth="100.0" prefWidth="-1.0" text="Vendor"/>
-                                        <TableColumn fx:id="tc_type" editable="false" maxWidth="500.0" minWidth="35.0"
-                                                     prefWidth="-1.0" text="Type"/>
+                                        <TableColumn fx:id="tc_id" editable="false" maxWidth="500.0" minWidth="35.0" prefWidth="-1.0" text="ID" />
+                                        <TableColumn fx:id="tc_name" editable="false" maxWidth="500.0" minWidth="100.0" prefWidth="-1.0" text="Name" />
+                                        <TableColumn fx:id="tc_vendor" editable="false" maxWidth="500.0" minWidth="100.0" prefWidth="-1.0" text="Vendor" />
+                                        <TableColumn fx:id="tc_type" editable="false" maxWidth="500.0" minWidth="35.0" prefWidth="-1.0" text="Type" />
                                     </columns>
                                     <cursor>
-                                        <Cursor fx:constant="HAND"/>
+                                        <Cursor fx:constant="HAND" />
                                     </cursor>
                                     <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
                             </children>
@@ -49,92 +42,91 @@
                                     <children>
                                         <Label alignment="CENTER_RIGHT" text="Name" textAlignment="RIGHT">
                                             <padding>
-                                                <Insets bottom="3.0"/>
+                                                <Insets bottom="3.0" />
                                             </padding>
                                         </Label>
                                         <TextField fx:id="tf_Name">
                                             <VBox.margin>
-                                                <Insets bottom="4.0"/>
+                                                <Insets bottom="4.0" />
                                             </VBox.margin>
                                             <cursor>
-                                                <Cursor fx:constant="TEXT"/>
+                                                <Cursor fx:constant="TEXT" />
                                             </cursor>
                                         </TextField>
                                         <Label alignment="CENTER_RIGHT" text="Vendor" textAlignment="RIGHT">
                                             <padding>
-                                                <Insets bottom="3.0"/>
+                                                <Insets bottom="3.0" />
                                             </padding>
                                         </Label>
                                         <TextField fx:id="tf_Vendor">
                                             <VBox.margin>
-                                                <Insets bottom="4.0"/>
+                                                <Insets bottom="4.0" />
                                             </VBox.margin>
                                             <cursor>
-                                                <Cursor fx:constant="TEXT"/>
+                                                <Cursor fx:constant="TEXT" />
                                             </cursor>
                                         </TextField>
                                         <Label alignment="CENTER_RIGHT" text="Type" textAlignment="RIGHT">
                                             <padding>
-                                                <Insets bottom="3.0"/>
+                                                <Insets bottom="3.0" />
                                             </padding>
                                         </Label>
                                         <ComboBox fx:id="cb_Type">
                                             <cursor>
-                                                <Cursor fx:constant="HAND"/>
+                                                <Cursor fx:constant="HAND" />
                                             </cursor>
                                             <VBox.margin>
-                                                <Insets bottom="4.0"/>
+                                                <Insets bottom="4.0" />
                                             </VBox.margin>
                                         </ComboBox>
                                     </children>
                                 </VBox>
                             </content>
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" contentDisplay="CENTER" text="Manipulation"
-                                    textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                        <TitledPane animated="false" collapsible="false" contentDisplay="CENTER" text="Manipulation" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                             <content>
                                 <VBox>
                                     <children>
-                                        <Button fx:id="btn_Preview" mnemonicParsing="false" onAction="#previewScene"
-                                                prefWidth="200.0" text="Preview">
+                                        <Button fx:id="btn_Preview" mnemonicParsing="false" onAction="#previewScene" prefWidth="200.0" text="Preview">
                                             <VBox.margin>
-                                                <Insets bottom="5.0"/>
+                                                <Insets bottom="5.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <Button fx:id="btn_Add" mnemonicParsing="false" onAction="#carRecordAdd"
-                                                prefWidth="200.0" text="Add">
+                                        <Button fx:id="btn_Add" mnemonicParsing="false" onAction="#carRecordAdd" prefWidth="200.0" text="Add">
                                             <VBox.margin>
-                                                <Insets bottom="5.0"/>
+                                                <Insets bottom="5.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <Button fx:id="btn_Edit" disable="true" mnemonicParsing="false"
-                                                onAction="#carRecordEdit" prefWidth="200.0" text="Edit">
+                                        <Button fx:id="btn_Edit" disable="true" mnemonicParsing="false" onAction="#carRecordEdit" prefWidth="200.0" text="Edit">
                                             <VBox.margin>
-                                                <Insets bottom="5.0"/>
+                                                <Insets bottom="5.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <Button fx:id="btn_Delete" disable="true" mnemonicParsing="false"
-                                                onAction="#carRecordDelete" prefWidth="200.0" text="Delete">
+                                        <Button fx:id="btn_Delete" disable="true" mnemonicParsing="false" onAction="#carRecordDelete" prefWidth="200.0" text="Delete">
                                             <VBox.margin>
-                                                <Insets bottom="5.0"/>
+                                                <Insets bottom="5.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <Button fx:id="btn_Deselect" disable="true" mnemonicParsing="false"
-                                                onAction="#carRecordDeselect" prefWidth="200.0" text="Deselect">
+                                        <Button fx:id="btn_Deselect" disable="true" mnemonicParsing="false" onAction="#carRecordDeselect" prefWidth="200.0" text="Deselect">
                                             <VBox.margin>
-                                                <Insets bottom="5.0"/>
+                                                <Insets bottom="5.0" />
                                             </VBox.margin>
                                         </Button>
                                     </children>
                                 </VBox>
                             </content>
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </TitledPane>
+                  <TitledPane animated="false" text="About">
+                     <content>
+                        <TextFlow fx:id="textFlowAbout" />
+                     </content>
+                  </TitledPane>
                     </children>
                 </VBox>
             </right>

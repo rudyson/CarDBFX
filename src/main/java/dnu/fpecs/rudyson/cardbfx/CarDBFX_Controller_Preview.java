@@ -36,6 +36,7 @@ public class CarDBFX_Controller_Preview implements Initializable {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scenes/main.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.getScene().setRoot(root);
+            stage.setTitle("Car DB FX");
             stage.show();
         } catch (IOException exception) {
             System.err.println(exception.getMessage());

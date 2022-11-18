@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
@@ -15,6 +17,7 @@ import java.util.logging.Logger;
 
 public class CarDBFX_Application extends Application {
     private static final Logger logger = Logger.getLogger(CarDBFX_Application.class.getName());
+    /*
     private static boolean getProperties(){
         try {
             logger.info(System.getProperty("user.dir"));
@@ -42,6 +45,8 @@ public class CarDBFX_Application extends Application {
         return false;
     }
 
+     */
+
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scenes/main.fxml")));
@@ -50,6 +55,7 @@ public class CarDBFX_Application extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/main.css")).toExternalForm());
         // Stage
         stage.setTitle("Car DB FX");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("icons/car.png"))));
         stage.setScene(scene);
         stage.setMinWidth(600);
         stage.setMinHeight(500);

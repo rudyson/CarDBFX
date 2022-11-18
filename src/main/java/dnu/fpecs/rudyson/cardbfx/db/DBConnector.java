@@ -1,11 +1,13 @@
 package dnu.fpecs.rudyson.cardbfx.db;
 
+import dnu.fpecs.rudyson.cardbfx.Main;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,15 +23,17 @@ public class DBConnector {
 
             Properties properties = new Properties();
 
-            logger.log(Level.INFO, "Runtime dir "+System.getProperty("user.dir"));
+            logger.log(Level.INFO, "Runtime dir " + System.getProperty("user.dir"));
 
-            if (new File(fileName).exists()){
+            if (new File(fileName).exists()) {
                 logger.log(Level.INFO, "Using properties file from disk");
                 properties.load(new FileInputStream(fileName));
-            }
-            else{
+            } else {
                 logger.log(Level.INFO, "Using properties resources");
-                properties.load(DBConnector.class.getResourceAsStream("properties/"+fileName));
+                InputStream inputStream = DBConnector.class.getResourceAsStream("/dnu/fpecs/rudyson/cardbfx/properties/" + fileName);
+                properties.load(inputStream);
+                if (inputStream != null)
+                    inputStream.close();
             }
             Class.forName(properties.getProperty("java.sql.Driver.class.name"));
             connection = DriverManager.getConnection(
@@ -37,18 +41,16 @@ public class DBConnector {
                     properties.getProperty("java.sql.Connection.username"),
                     properties.getProperty("java.sql.Connection.password")
             );
-            logger.log(Level.INFO,String.format("Connected to database %s as %s",connection.getMetaData().getURL(),connection.getMetaData().getUserName()));
+            logger.log(Level.INFO, String.format("Connected to database %s as %s", connection.getMetaData().getURL(), connection.getMetaData().getUserName()));
             return true;
         } catch (SQLException exception) {
-            logger.log(Level.SEVERE, "SQLException:\n"+exception);
-        }
-        catch (IOException exception){
-            logger.log(Level.SEVERE, "IOException:\n"+exception);
-        }
-        catch (NullPointerException exception){
-            logger.log(Level.SEVERE, "Wrong database configuration file path:\n"+exception);
+            logger.log(Level.SEVERE, "SQLException:\n" + exception);
+        } catch (IOException exception) {
+            logger.log(Level.SEVERE, "IOException:\n" + exception);
+        } catch (NullPointerException exception) {
+            logger.log(Level.SEVERE, "Wrong database configuration file path:\n" + exception);
         } catch (ClassNotFoundException exception) {
-            logger.log(Level.SEVERE, "ClassNotFoundException:\n"+exception);
+            logger.log(Level.SEVERE, "ClassNotFoundException:\n" + exception);
         }
         return false;
     }

@@ -13,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
@@ -28,6 +30,8 @@ import java.util.logging.Logger;
 public class CarDBFX_Controller_Main implements Initializable {
     private final Logger logger = Logger.getLogger(CarDBFX_Controller_Main.class.getName());
     private boolean carSelected = false;
+    @FXML
+    private TextFlow textFlowAbout;
     @FXML
     private TextField tf_Name;
     @FXML
@@ -58,7 +62,6 @@ public class CarDBFX_Controller_Main implements Initializable {
 
     private DBConnector dbConnector;
     private final HashMap<Integer, Transmission> transmissionMap = new HashMap<>();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tc_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -67,22 +70,27 @@ public class CarDBFX_Controller_Main implements Initializable {
         tc_type.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         dbConnector = new DBConnector();
-        ArrayList<Transmission> transmissions = new ArrayList<>();
-        if (dbConnector.init())
+        boolean conState = dbConnector.init();
+        ArrayList<Transmission> transmissions;
+        if (conState){
             transmissions = dbConnector.getTransmissions();
+            for (Transmission transmission : transmissions) {
+                transmissionMap.put(transmission.getId(), transmission);
+            }
 
-        for (Transmission transmission : transmissions) {
-            transmissionMap.put(transmission.getId(), transmission);
+            cb_Type.setItems(FXCollections.observableArrayList(transmissions));
+            cb_Type.getSelectionModel().selectFirst();
+            this.loadTable();
+
+            table.setOnMouseClicked(e -> updateSelection());
+            table.setOnKeyPressed(e -> updateSelection());
+            table.setOnTouchPressed(e -> updateSelection());
+            clearSelection();
         }
-
-        cb_Type.setItems(FXCollections.observableArrayList(transmissions));
-        cb_Type.getSelectionModel().selectFirst();
-        this.loadTable();
-
-        table.setOnMouseClicked(e -> updateSelection());
-        table.setOnKeyPressed(e -> updateSelection());
-        table.setOnTouchPressed(e -> updateSelection());
-        clearSelection();
+        textFlowAbout.getChildren().addAll(
+                new Text("© 2022 Ruslan Diadiushkin\n"),
+                new Hyperlink("https://github.com/rudyson")
+        );
     }
 
     @FXML
@@ -131,10 +139,9 @@ public class CarDBFX_Controller_Main implements Initializable {
 
     @FXML
     protected void carRecordDelete() {
-        if (dbConnector.deleteCar(table.getSelectionModel().getSelectedItem().getId())){
+        if (dbConnector.deleteCar(table.getSelectionModel().getSelectedItem().getId())) {
             logger.log(Level.INFO, "Record deleted.");
-        }
-        else {
+        } else {
             logger.log(Level.SEVERE, "Record deleting error. MySQL query not executed.");
             new Alert(Alert.AlertType.ERROR, "MySQL Error").show();
         }
@@ -190,26 +197,31 @@ public class CarDBFX_Controller_Main implements Initializable {
                         transmissionMap.get(resultSet.getInt(4))
                 ));
             resultSet.close();
-            logger.log(Level.INFO,"Table loaded.");
+            logger.log(Level.INFO, "Table loaded.");
         } catch (SQLException exception) {
-            logger.log(Level.SEVERE,Arrays.toString(exception.getStackTrace()));
+            logger.log(Level.SEVERE, Arrays.toString(exception.getStackTrace()));
         }
     }
 
     @FXML
     protected void previewScene(ActionEvent event) {
         try {
-            logger.log(Level.CONFIG,"Switching scene to \"Preview\"");
+
+
+            logger.log(Level.CONFIG, "Switching scene to \"Preview\"");
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("scenes/preview.fxml")));
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
-            stage.show();
 
             Car car = table.getSelectionModel().getSelectedItem();
-            CarDBFX_Controller_Preview carDBFX_controller_preview = fxmlLoader.getController();
 
+            String previewTitle = String.format("%s %s, %s", car.getVendor(), car.getName(), car.getType().getName());
             String carName = car.getVendor() + " " + car.getName();
+
+            Parent root = fxmlLoader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(root);
+            stage.setTitle(carName + " - Preview");
+            stage.show();
 
             URL searchWiki1 = new URL(
                     String.format(
@@ -218,8 +230,8 @@ public class CarDBFX_Controller_Main implements Initializable {
                     )
             );
             String stringJSON = new Scanner(searchWiki1.openStream(), StandardCharsets.UTF_8).useDelimiter("\\A").next();
-            logger.log(Level.INFO,"Loaded " + searchWiki1);
-            logger.log(Level.INFO,stringJSON);
+            logger.log(Level.INFO, "Loaded " + searchWiki1);
+            logger.log(Level.INFO, stringJSON);
             JSONObject json = new JSONObject(stringJSON);
             String articleTitle = json.getJSONObject("query").getJSONArray("search").getJSONObject(0).getString("title");
             String articleURL = String.format(
@@ -235,19 +247,22 @@ public class CarDBFX_Controller_Main implements Initializable {
                     )
             );
             stringJSON = new Scanner(searchWiki2.openStream(), StandardCharsets.UTF_8).useDelimiter("\\A").next();
-            logger.log(Level.INFO,"Loaded " + searchWiki2);
-            logger.log(Level.INFO,stringJSON);
+            logger.log(Level.INFO, "Loaded " + searchWiki2);
+            logger.log(Level.INFO, stringJSON);
             json = new JSONObject(stringJSON);
             String imageURL = json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getJSONObject("original").getString("source");
-            logger.log(Level.INFO,"Loaded " + imageURL);
+            logger.log(Level.INFO, "Loaded " + imageURL);
 
+            CarDBFX_Controller_Preview carDBFX_controller_preview = fxmlLoader.getController();
             carDBFX_controller_preview.setPreviewImage(new Image(imageURL));
             carDBFX_controller_preview.setViewCarOnWiki(
-                    String.format("%s %s, %s", car.getVendor(), car.getName(), car.getType().getName()),
+                    previewTitle,
                     articleURL,
                     articleTitle);
+        } catch (NullPointerException exception) {
+            logger.log(Level.SEVERE, "NullPointerException:\n" + exception);
         } catch (Exception exception) {
-            logger.log(Level.SEVERE,Arrays.toString(exception.getStackTrace()));
+            logger.log(Level.SEVERE, "Exception:\n" + exception);
         }
     }
 
