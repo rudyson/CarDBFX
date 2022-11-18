@@ -48,42 +48,15 @@ public class CarDBFX_Controller_Preview implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*
-        apfitimg.widthProperty().addListener((ChangeListener<? super Number>) new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                previewImage.setFitWidth(apfitimg.getWidth());
-            }
-        });
-        apfitimg.heightProperty().addListener((ChangeListener<? super Number>) new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                previewImage.setFitHeight(apfitimg.getHeight());
-            }
-        });
-
-         */
-        /*
-        apfitimg.widthProperty().addListener(e->{
-            System.out.printf("%.0f_%.0f%n",apfitimg.getWidth(),apfitimg.getHeight());
-            previewImage.setFitWidth(apfitimg.getWidth());
-        });
-        apfitimg.heightProperty().addListener(e->{
-            System.out.printf("%.0f_%.0f%n",apfitimg.getWidth(),apfitimg.getHeight());
-            previewImage.setFitHeight(apfitimg.getHeight());
-        });
-
-         */
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
     public void setViewCarOnWiki(String title, String url, String article) {
         viewCarOnWiki.setText(title);
         viewCarOnWiki.setOnAction(e -> {
             try {
                 java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "IOException:\n",exception);
             }
         });
         Tooltip.install(previewImage, new Tooltip(article));

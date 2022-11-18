@@ -18,6 +18,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -87,9 +88,19 @@ public class CarDBFX_Controller_Main implements Initializable {
             table.setOnTouchPressed(e -> updateSelection());
             clearSelection();
         }
+        Text infoAbout_Copyright = new Text("© 2022 Ruslan Diadiushkin\n");
+        Hyperlink infoAbout_Github = new Hyperlink("https://github.com/rudyson");
+        infoAbout_Github.setOnAction(event -> {
+            try {
+                java.awt.Desktop.getDesktop().browse(java.net.URI.create(infoAbout_Github.getText()));
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE,"IOException:", exception);
+            }
+        });
+
         textFlowAbout.getChildren().addAll(
-                new Text("© 2022 Ruslan Diadiushkin\n"),
-                new Hyperlink("https://github.com/rudyson")
+                infoAbout_Copyright,
+                infoAbout_Github
         );
     }
 
@@ -197,9 +208,9 @@ public class CarDBFX_Controller_Main implements Initializable {
                         transmissionMap.get(resultSet.getInt(4))
                 ));
             resultSet.close();
-            logger.log(Level.INFO, "Table loaded.");
+            logger.log(Level.INFO, "Table's content loaded");
         } catch (SQLException exception) {
-            logger.log(Level.SEVERE, Arrays.toString(exception.getStackTrace()));
+            logger.log(Level.SEVERE, "SQLException:\n",exception);
         }
     }
 
@@ -230,8 +241,8 @@ public class CarDBFX_Controller_Main implements Initializable {
                     )
             );
             String stringJSON = new Scanner(searchWiki1.openStream(), StandardCharsets.UTF_8).useDelimiter("\\A").next();
-            logger.log(Level.INFO, "Loaded " + searchWiki1);
-            logger.log(Level.INFO, stringJSON);
+            logger.log(Level.CONFIG, "Loaded " + searchWiki1);
+            logger.log(Level.CONFIG, stringJSON);
             JSONObject json = new JSONObject(stringJSON);
             String articleTitle = json.getJSONObject("query").getJSONArray("search").getJSONObject(0).getString("title");
             String articleURL = String.format(
@@ -247,11 +258,11 @@ public class CarDBFX_Controller_Main implements Initializable {
                     )
             );
             stringJSON = new Scanner(searchWiki2.openStream(), StandardCharsets.UTF_8).useDelimiter("\\A").next();
-            logger.log(Level.INFO, "Loaded " + searchWiki2);
-            logger.log(Level.INFO, stringJSON);
+            logger.log(Level.CONFIG, "Loaded " + searchWiki2);
+            logger.log(Level.CONFIG, stringJSON);
             json = new JSONObject(stringJSON);
             String imageURL = json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getJSONObject("original").getString("source");
-            logger.log(Level.INFO, "Loaded " + imageURL);
+            logger.log(Level.CONFIG, "Loaded " + imageURL);
 
             CarDBFX_Controller_Preview carDBFX_controller_preview = fxmlLoader.getController();
             carDBFX_controller_preview.setPreviewImage(new Image(imageURL));

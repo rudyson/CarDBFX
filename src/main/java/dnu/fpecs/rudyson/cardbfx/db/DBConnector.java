@@ -1,7 +1,5 @@
 package dnu.fpecs.rudyson.cardbfx.db;
 
-import dnu.fpecs.rudyson.cardbfx.Main;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,16 +18,13 @@ public class DBConnector {
     public boolean init() {
         try {
             String fileName = "application.properties";
-
             Properties properties = new Properties();
 
-            logger.log(Level.INFO, "Runtime dir " + System.getProperty("user.dir"));
-
             if (new File(fileName).exists()) {
-                logger.log(Level.INFO, "Using properties file from disk");
+                logger.log(Level.INFO, "Using application configuration from disk");
                 properties.load(new FileInputStream(fileName));
             } else {
-                logger.log(Level.INFO, "Using properties resources");
+                logger.log(Level.INFO, "Using application configuration from resources");
                 InputStream inputStream = DBConnector.class.getResourceAsStream("/dnu/fpecs/rudyson/cardbfx/properties/" + fileName);
                 properties.load(inputStream);
                 if (inputStream != null)
@@ -41,7 +36,7 @@ public class DBConnector {
                     properties.getProperty("java.sql.Connection.username"),
                     properties.getProperty("java.sql.Connection.password")
             );
-            logger.log(Level.INFO, String.format("Connected to database %s as %s", connection.getMetaData().getURL(), connection.getMetaData().getUserName()));
+            logger.log(Level.CONFIG, String.format("Connected to database %s as %s", connection.getMetaData().getURL(), connection.getMetaData().getUserName()));
             return true;
         } catch (SQLException exception) {
             logger.log(Level.SEVERE, "SQLException:\n" + exception);
