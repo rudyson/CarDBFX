@@ -1,0 +1,73 @@
+* {
+    -fx-color-primary: #BA85FB;
+    -fx-color-primary-pressed: #6200EE;
+    -fx-color-primary-hover: #B888F7;
+    -fx-color-secondary: #03DAC5;
+    -fx-color-item: #1E1E1E;
+    -fx-color-bg: #121212;
+    -fx-color-mitem: #2D2D2D;
+    -fx-color-mbg: #352525;
+    -fx-color-text-primary: #000000;
+    -fx-color-text-item: #FFFFFF;
+}
+
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 12px;
+}
+
+.button,
+.text-field,
+.combo-box,
+.combo-box-popup {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5px;
+    -fx-border-color: #27ae60;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+    -fx-font-weight: 500;
+}
+
+.button:focused,
+.text-field:focused,
+.combo-box:focused,
+.combo-box-popup:focused {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: greenyellow;
+}
+
+.button:hover,
+.text-field:hover,
+.combo-box:hover,
+.combo-box-popup:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #1e8449;
+}
+
+.button:pressed {
+    -fx-background-color: #1e8449;
+    -fx-border-color: #1e8449;
+    -fx-text-fill: #FFFFFF;
+    -fx-fill: #FFFFFF;
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color: #1e8449;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.table-row-cell {
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view:focused .table-row-cell:focused {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: #FFFFFF;
+    -fx-table-cell-border-color: transparent;
+}
