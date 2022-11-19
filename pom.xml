@@ -35,7 +35,13 @@
             <timezone>Ukraine/Kyiv</timezone>
         </developer>
     </developers>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/rudyson/CarDBFX</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <!-- Java FX -->
         <dependency>

@@ -217,8 +217,6 @@ public class CarDBFX_Controller_Main implements Initializable {
     @FXML
     protected void previewScene(ActionEvent event) {
         try {
-
-
             logger.log(Level.CONFIG, "Switching scene to \"Preview\"");
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("scenes/preview.fxml")));
 
